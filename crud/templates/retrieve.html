@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block title %}Form{% endblock %}
+
+
+    
+{% block hero %}
+
+{% include "hero.html" %}
+
+{% endblock  %}
+<hr>
+{% block body %}
+<div class= "container">
+{% if data %}
+
+{% for i in data %}
+
+<p>Name: {{i.name}}</p>
+<p>Age: {{i.age}}</p>
+<p>Country: {{i.country}}</p>
+<p>Email: {{i.email}}</p>
+
+<hr>
+{% endfor %}
+{% else %}
+<p>Object Not Found!</p>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block footer %}
+
+{% include "footer.html" %}
+
+{% endblock  %}

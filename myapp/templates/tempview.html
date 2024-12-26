@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+    {% block title %}Template View{% endblock %}
+
+
+    {% block css %}
+        .cl{
+            color: blue;
+        }
+    {% endblock %}
+
+    
+{% block body %}    
+    <h1>Hello World!</h1>
+    <p>I'm learning Django class-based-views.</p>
+    <hr>
+    {% if data %}
+    <h5>My data:</h5>
+    <p>{{data|upper|truncatewords:4|default:"Nothing"}}</p>
+    {% elif name %}
+    <p>Name: {{name|upper|default:"Name not getting!"}}
+    <hr>
+    {% elif st_name %}
+    <h5>Student name: <span class="cl">{{st_name.name|capfirst|default:"No student found"}}</span></h5>
+    {%endif%}
+    <a href="{% url "go-to-very" %}">Redirect to the Youtube</a>
+{% endblock %}

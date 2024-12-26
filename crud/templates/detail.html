@@ -1,0 +1,32 @@
+{% extends "base.html" %} 
+{% block title %}Form{% endblock %} 
+{% block css %}
+body { 
+    background-color: black; 
+    color: white; 
+} 
+{% endblock %} 
+
+{% block hero %}
+
+{% include "hero.html" %} 
+{% endblock %} 
+
+{% block body %} 
+
+{% if data %}
+
+<p>Name: {{data.name}}</p>
+<p>Age: {{data.age}}</p>
+<p>Country: {{data.country}}</p>
+<p>Email: {{data.email}}</p>
+<hr />
+{% else %}
+<p>Object Not Found!</p>
+{% endif %} 
+{% endblock %} 
+
+{% block footer %} 
+
+{% include "footer.html" %} 
+{% endblock %}
