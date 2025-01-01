@@ -1,11 +1,5 @@
 {% extends "base.html" %} 
 {% block title %}Form{% endblock %} 
-{% block css %}
-body { 
-    background-color: black; 
-    color: white; 
-} 
-{% endblock %} 
 
 {% block hero %}
 
@@ -13,7 +7,9 @@ body {
 {% endblock %} 
 
 {% block body %} 
-
+<div class = "container">
+<h2><strong>Detail Page</strong></h2>
+<hr>
 {% if data %}
 
 <p>Name: {{data.name}}</p>
@@ -24,6 +20,7 @@ body {
 {% else %}
 <p>Object Not Found!</p>
 {% endif %} 
+</div>
 {% endblock %} 
 
 {% block footer %} 

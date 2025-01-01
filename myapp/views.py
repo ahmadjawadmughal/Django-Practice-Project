@@ -84,7 +84,7 @@ class SingleStudent(TemplateView):
         return context
     
 
-
+"""
 password = make_password("hello")
 check = check_password("hello", password)
 print(check) # false
@@ -95,3 +95,4 @@ print(usable)
 
 changed = password_changed("changed")
 print(changed)
+"""

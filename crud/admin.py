@@ -4,6 +4,6 @@ from .models import *
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ["name", "age", "email"]
+    # list_display = ["name", "age", "email"]
     search_fields = ["name", "email"]
     

@@ -1,3 +1,5 @@
+{% load i18n %}
+{% load l10n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +28,8 @@
       <div class="alert 
         {% if message.tags == 'success' %}alert-success{% endif %}
         {% if message.tags == 'warning' %}alert-warning{% endif %}
+        {% if message.tags == 'error' %}alert-danger{% endif %}
+
         alert-dismissible fade show" role="alert">
         {{ message }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -37,7 +41,8 @@
 
 {% endblock  %}
     {% block hero %}{% endblock  %}
-    {% block body %}{% endblock %}
+    {% block body %}
+    {% endblock %}
     {% block footer %}{% endblock  %}
 </body>
 </html>

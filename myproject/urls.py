@@ -16,10 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.i18n import i18n_patterns
+from crud.urls import home
 
 urlpatterns = [
+    path("index", include("myapp.urls")),
+    path("", home, name="home"),
+
+]
+
+urlpatterns  += i18n_patterns(
     path('admin/', admin.site.urls),
-    path("", include("myapp.urls")),
     path("crud/", include("crud.urls")),
     path("userapp/", include("userapp.urls")),
-]
+)
