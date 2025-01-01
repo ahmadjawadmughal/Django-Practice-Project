@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -125,3 +127,121 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+# django logging 
+
+
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "level": "ERROR",  # Ensure 'ERROR' is capitalized
+            "filters": ["require_debug_true"],
+            "class": "logging.FileHandler",
+            "filename": "log/error.log",  # Provide the filename here
+            "formatter": "simple",
+        },
+        # "mail_admins": {
+        #     "level": "ERROR",
+        #     "class": "django.utils.log.AdminEmailHandler",
+        #     "filters": ["special"],
+        # },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "propagate": True,
+        },
+        "django.request":{
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagte": True 
+        }
+        # "django.request": {
+        #     "handlers": ["mail_admins"],
+        #     "level": "ERROR",
+        #     "propagate": False,
+        # },
+        # "myproject.custom": {
+        #     "handlers": ["console", "mail_admins"],
+        #     "level": "INFO",
+        #     "filters": ["special"],
+        # },
+    },
+}
+
+
+
+
+# Email 
+import os
+from dotenv import load_dotenv
+from decouple import config 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+# EMAIL_TIMEOUT = True 
+
+
+
+# Internationalization
+
+from django.utils.translation import gettext_lazy as _
+
+USE_I18N = True
+
+
+LANGUAGE_CODE = 'en'   #default language
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('fr', _('French')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+
+# Localization
+
+USE_L10N = True
+
+USE_TZ = True  #time zone support
+
+TIME_ZONE = "Europe/Paris"  #default time zone

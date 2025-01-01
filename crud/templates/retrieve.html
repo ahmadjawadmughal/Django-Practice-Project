@@ -1,15 +1,17 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-
-{% block title %}Form{% endblock %}
+{% block title %}{% trans "Form" %}{% endblock %}
 
 
     
 {% block hero %}
-
 {% include "hero.html" %}
-
 {% endblock  %}
+
+
+
+{% comment "" %}
 <hr>
 {% block body %}
 <div class= "container">
@@ -22,11 +24,18 @@
 <p>Country: {{i.country}}</p>
 <p>Email: {{i.email}}</p>
 
+<!--buttons for update & delete-->
+<!-- Update and Delete Buttons with URL tags -->
+<a href="{% url 'update-view' i.id %}" class="btn btn-outline-primary mx-2">Update</a>
+<a href="{% url 'delete-view' i.id %}" class="btn btn-outline-danger">Delete</a>
+
+
 <hr>
 {% endfor %}
 {% else %}
 <p>Object Not Found!</p>
 {% endif %}
+
 </div>
 {% endblock %}
 
@@ -34,4 +43,118 @@
 
 {% include "footer.html" %}
 
+{% endblock  %}
+{% endcomment %}
+
+{% block body %}
+
+
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        
+        <th>{% trans "Name" %}</th>
+        <th>{% trans "age" %}</th>
+        <th>{% trans "Country" %}</th>
+        <th>{% trans "Email" %}</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.country }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <ul class="pagination">
+    {% if users.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ users.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&laquo;</span>
+      </li>
+    {% endif %}
+  
+    {% for i in users.paginator.page_range %}
+      {% if users.number == i %}
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ i }} <span class="visually-hidden">(current)</span></span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  
+    {% if users.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ users.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&raquo;</span>
+      </li>
+    {% endif %}
+  </ul>
+
+
+<!--FOr the CLASS BASED VIEWS-->
+{% comment "" %}
+{% if page_obj.has_other_pages %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&laquo;</span>
+      </li>
+    {% endif %}
+    
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ i }} <span class="visually-hidden">(current)</span></span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <span class="page-link" aria-hidden="true">&raquo;</span>
+      </li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endcomment %}
+  {% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
 {% endblock  %}
